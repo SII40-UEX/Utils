@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Distributed Healthcare system - Patient's home
+  description: >-
+       This API allows the hospital to collect information (heart rate and blood oxygen information) when necessary and send alerts if it detects any risk.
+  version: '1.0'
+  termsOfService: 'http://spilab.es/'
+  contact:
+    name: Spilab
+    url: 'http://spilab.es/'
+    email: spilab.uex@gmail.com
+servers:
+  - url: https://localhost/
+tags:
+  - name: Patient
+paths:
+  /heartRate :
+    get:
+      summary: Gets the heart rate 
+      operationId: getHeartRate 
+      tags:
+      - Patient
+      
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+        404:
+          $ref: '#/components/responses/404'
+  /bloodOxygen:
+    get:
+      summary: Gets the blood oxygen
+      operationId: getBloodOxygen
+      tags:
+      - Patient
+      
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+        404:
+          $ref: '#/components/responses/404'
+  /alert :
+    post:
+      summary: Post alert
+      operationId: postAlert
+      requestBody:
+        content:
+          application/json:
+           schema:
+            type: string
+            example: {"message": "alert message"}
+      tags:
+      - Patient
+      
+      responses:
+        200:
+          $ref: '#/components/responses/201'
+        404:
+          $ref: '#/components/responses/404'
+  
+components:
+  responses:
+      404:
+        content:
+          text/plain:
+            schema:
+              example: Not found
+              title: Endpoint or ID not found
+              type: string
+        description: Not found response
+      200:
+        content:
+          text/plain:
+            schema:
+              example: Get Correctly
+              title: Succesful response
+              type: string
+        description: Succesful response
+      201:
+        content:
+          text/plain:
+            schema:
+              example: Update Correctly
+              title: Succesful response
+              type: string
+        description: Succesful response
+  

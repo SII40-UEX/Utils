@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Distributed Healthcare system - Hospital
+  description: >-
+     This API allows the doctor to review the patient's history with the collected information and make updates.
+  version: '1.0'
+  termsOfService: 'http://spilab.es/'
+  contact:
+    name: Spilab
+    url: 'http://spilab.es/'
+    email: spilab.uex@gmail.com
+servers:
+  - url: https://localhost/
+tags:
+  - name: Patient
+paths:
+  /patients/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of pet to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Gets the history record
+      operationId: getPatient
+
+      tags:
+      - Patient
+      
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+        404:
+          $ref: '#/components/responses/404'
+    put:
+      summary: Updates the history record
+      operationId: updatePatient
+
+      tags:
+      - Patient
+      
+      responses:
+        201:
+          $ref: '#/components/responses/200'
+        404:
+          $ref: '#/components/responses/404'
+  
+components:
+  responses:
+      404:
+        content:
+          text/plain:
+            schema:
+              example: Not found
+              title: Endpoint or ID not found
+              type: string
+        description: Not found response
+      200:
+        content:
+          text/plain:
+            schema:
+              example: Get Correctly
+              title: Succesful response
+              type: string
+        description: Succesful response
+      201:
+        content:
+          text/plain:
+            schema:
+              example: Update Correctly
+              title: Succesful response
+              type: string
+        description: Succesful response
+  

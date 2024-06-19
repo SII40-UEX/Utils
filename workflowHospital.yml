@@ -1,0 +1,26 @@
+name: WorkFlow Hospital Home
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  KEY_PEM: ${{ secrets.KEY_PEM }}  
+  
+jobs:
+  deploy:
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v2  
+     - name: Pull repo
+       uses: fifsky/ssh-action@master
+       with:
+         command: |
+          cd hospitalAPI
+          sudo pm2 stop HospitalAPI
+          git pull origin master
+          npm install
+          sudo pm2 start HospitalAPI
+         host: ec2-34-242-37-222.eu-west-1.compute.amazonaws.com
+         user: ubuntu
+         key: ${{ secrets.KEY_PEM }}
